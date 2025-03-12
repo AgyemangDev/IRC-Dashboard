@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Papa from "papaparse";
-import ICRTable from "../components/UserTable";
+import IRCTable from "../components/UserTable";
 
 const FullICR = () => {
   const [data, setData] = useState([]);
@@ -32,7 +32,7 @@ const FullICR = () => {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Associate ICR Members</h1>
-      <ICRTable data={data} isLoading={loading} />
+      <IRCTable data={data} isLoading={loading} />
     </div>
   );
 };

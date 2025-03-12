@@ -1,10 +1,8 @@
-"use client";
-
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
-const ICRTable = ({ data, isLoading }) => {
-  const [selectedRows, setSelectedRows] = useState([]);
+const IRCTable = ({ data, isLoading }) => {
+  const navigate = useNavigate();
 
   const displayedColumns = [
     "Full Name of Legal Entity",
@@ -13,22 +11,6 @@ const ICRTable = ({ data, isLoading }) => {
     "Email of Focal Person (Enter Email)",
     "Telephone Number of Organisation",
   ];
-
-  const toggleSelectAll = () => {
-    if (selectedRows.length === data.length) {
-      setSelectedRows([]);
-    } else {
-      setSelectedRows(data.map((row, index) => index));
-    }
-  };
-
-  const toggleSelectRow = (index) => {
-    if (selectedRows.includes(index)) {
-      setSelectedRows(selectedRows.filter((i) => i !== index));
-    } else {
-      setSelectedRows([...selectedRows, index]);
-    }
-  };
 
   if (isLoading) {
     return (
@@ -56,8 +38,6 @@ const ICRTable = ({ data, isLoading }) => {
       <table className="w-full border border-gray-300 bg-white shadow-md">
         <thead>
           <tr className="bg-blue-500 text-white border-b border-gray-200">
-            <th className="py-3 px-4 text-left">
-            </th>
             {displayedColumns.map((col, index) => (
               <th key={index} className="py-3 px-4 text-left font-medium">{col}</th>
             ))}
@@ -72,11 +52,9 @@ const ICRTable = ({ data, isLoading }) => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ delay: rowIndex * 0.05 }}
-                className="border-b border-gray-200 hover:bg-gray-50"
+                className="border-b border-gray-200 hover:bg-gray-50 cursor-pointer"
+                onClick={() => navigate("/details", { state: { rowData: row } })}
               >
-                <td className="py-3 px-4">
-                
-                </td>
                 {displayedColumns.map((col, colIndex) => (
                   <td key={colIndex} className="py-3 px-4">{row[col] || "-"}</td>
                 ))}
@@ -89,4 +67,4 @@ const ICRTable = ({ data, isLoading }) => {
   );
 };
 
-export default ICRTable;
+export default IRCTable;
