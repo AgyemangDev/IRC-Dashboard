@@ -1,46 +1,56 @@
+"use client";
+
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { Eye } from "lucide-react";
 
 const IRCTable = ({ data, isLoading }) => {
   const navigate = useNavigate();
 
-  const displayedColumns = [
-    "Full Name of Legal Entity",
-    "Acronym of Organisation",
-    "Type of Organisation",
-    "Email of Focal Person (Enter Email)",
-    "Telephone Number of Organisation",
-  ];
+  const displayedColumns =
+    data.length > 0
+      ? Object.keys(data[0])
+      : [
+          "Full Name",
+          "Acronym",
+          "Type",
+          "Email",
+          "Phone",
+        ];
+
+  const truncateText = (text, maxLength = 20) => {
+    if (!text) return "-";
+    return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+  };
 
   if (isLoading) {
     return (
-      <div className="py-20">
-        <div className="flex justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
-        </div>
-        <p className="text-center mt-4 text-gray-500">Loading data...</p>
+      <div className="flex flex-col items-center py-20">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-indigo-600 border-opacity-50"></div>
+        <p className="mt-4 text-gray-500 text-lg">Loading data...</p>
       </div>
     );
   }
 
   if (data.length === 0) {
     return (
-      <div className="py-20">
-        <p className="text-center text-gray-500">
-          No records found matching your criteria.
-        </p>
+      <div className="flex justify-center py-20">
+        <p className="text-gray-500 text-lg">No records found matching your criteria.</p>
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full border border-gray-300 bg-white shadow-md">
+    <div className="overflow-x-auto rounded-xl shadow-lg border border-gray-200 bg-white p-4">
+      <table className="w-full border-collapse text-sm">
         <thead>
-          <tr className="bg-blue-500 text-white border-b border-gray-200">
+          <tr className="bg-indigo-600 text-white text-xs uppercase tracking-wider">
             {displayedColumns.map((col, index) => (
-              <th key={index} className="py-3 px-4 text-left font-medium">{col}</th>
+              <th key={index} className="py-3 px-4 text-left font-medium">
+                {col}
+              </th>
             ))}
+            <th className="py-3 px-4 text-left font-medium">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -48,16 +58,28 @@ const IRCTable = ({ data, isLoading }) => {
             {data.map((row, rowIndex) => (
               <motion.tr
                 key={rowIndex}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ delay: rowIndex * 0.05 }}
-                className="border-b border-gray-200 hover:bg-gray-50 cursor-pointer"
-                onClick={() => navigate("/details", { state: { rowData: row } })}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2, delay: rowIndex * 0.05 }}
+                className="border-b border-gray-200 hover:bg-indigo-100 transition group"
               >
                 {displayedColumns.map((col, colIndex) => (
-                  <td key={colIndex} className="py-3 px-4">{row[col] || "-"}</td>
+                  <td key={colIndex} className="py-3 px-4 text-gray-700 relative">
+                    <span className="block truncate group-hover:hidden">{truncateText(row[col])}</span>
+                    <span className="hidden group-hover:block absolute left-0 top-0 bg-white p-2 shadow-md rounded-md w-max text-black">
+                      {row[col]}
+                    </span>
+                  </td>
                 ))}
+                <td className="py-3 px-4">
+                  <button
+                    onClick={() => navigate("/details", { state: { rowData: row } })}
+                    className="p-2 rounded-lg bg-indigo-100 text-indigo-600 hover:bg-indigo-200 transition-colors"
+                  >
+                    <Eye className="h-5 w-5" />
+                  </button>
+                </td>
               </motion.tr>
             ))}
           </AnimatePresence>
