@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
@@ -29,45 +30,18 @@ const Sidebar = () => {
       </div>
 
       <div className="flex-1 overflow-y-auto py-4">
-        <div className="px-4 mb-4">
-          <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-indigo-50 text-indigo-600">
-            <LayoutDashboard className="h-5 w-5" />
-            <span className="font-medium">Dashboard</span>
-          </div>
-        </div>
-
+        {/* Members Section */}
         <div className="px-4 mb-2">
           <h3 className="text-xs uppercase text-gray-500 font-semibold px-3 mb-2">Members</h3>
           <div className="space-y-1">
-            <div className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700">
+            <Link to="/full-icr" className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700">
               <UserCheck className="h-5 w-5" />
               <span>Full IRC Members</span>
-            </div>
-            <div className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700">
+            </Link>
+            <Link to="/associate-icr" className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700">
               <UserPlus className="h-5 w-5" />
               <span>Associate Members</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="px-4 mb-2">
-          <div className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700">
-            <Shield className="h-5 w-5" />
-            <span>Permissions</span>
-          </div>
-        </div>
-
-        <div className="px-4 mb-2 mt-4">
-          <h3 className="text-xs uppercase text-gray-500 font-semibold px-3 mb-2">Management</h3>
-          <div className="pl-8 space-y-1">
-            <div className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700">
-              <List className="h-5 w-5" />
-              <span>Member List</span>
-            </div>
-            <div className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700">
-              <Eye className="h-5 w-5" />
-              <span>View Members</span>
-            </div>
+            </Link>
           </div>
         </div>
       </div>
