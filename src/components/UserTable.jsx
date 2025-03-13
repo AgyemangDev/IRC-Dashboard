@@ -11,10 +11,8 @@ const IRCTable = ({ data, isLoading }) => {
   const [searchTerm, setSearchTerm] = useState("")
 
   // Get columns from data or use default columns
-  const displayedColumns = useMemo(() => {
-    return data.length > 0 ? Object.keys(data[0]) : ["Full Name", "Acronym", "Type", "Email", "Phone"]
-  }, [data])
-
+  const displayedColumns = ["Full Name of Legal Entity", "Acronym of Organisation", "Type of Organisation", "Date", "Telephone Number of Organisation"];
+  console.log(data)
   // Sort and filter data
   const processedData = useMemo(() => {
     let filteredData = [...data]
@@ -65,7 +63,7 @@ const IRCTable = ({ data, isLoading }) => {
   }
 
   // Truncate text with tooltip
-  const truncateText = (text, maxLength = 20) => {
+  const truncateText = (text, maxLength = 40) => {
     if (!text) return "-"
     return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text
   }
@@ -185,9 +183,6 @@ const IRCTable = ({ data, isLoading }) => {
                     </div>
                   </th>
                 ))}
-                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider bg-gradient-to-r from-indigo-600 to-indigo-700 text-white">
-                  Actions
-                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -204,7 +199,8 @@ const IRCTable = ({ data, isLoading }) => {
                     {displayedColumns.map((col, colIndex) => (
                       <td
                         key={colIndex}
-                        className="px-4 py-3 whitespace-nowrap group relative border-r border-gray-100 last:border-r-0"
+                        className="px-4 py-3 cursor-pointer whitespace-nowrap group relative border-r border-gray-100 last:border-r-0"
+                        onClick={() => navigate("/details", { state: { rowData: row } })}
                       >
                         <div className="text-sm text-gray-700 font-medium">{truncateText(row[col])}</div>
 
@@ -216,15 +212,6 @@ const IRCTable = ({ data, isLoading }) => {
                         )}
                       </td>
                     ))}
-                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">
-                      <button
-                        onClick={() => navigate("/details", { state: { rowData: row } })}
-                        className="inline-flex items-center justify-center p-2 rounded-full bg-indigo-100 text-indigo-700 hover:bg-indigo-200 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-sm"
-                        title="View Details"
-                      >
-                        <Eye className="h-4 w-4" />
-                      </button>
-                    </td>
                   </motion.tr>
                 ))}
               </AnimatePresence>

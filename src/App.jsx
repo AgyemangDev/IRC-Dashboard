@@ -8,12 +8,12 @@ import DetailsPage from "./pages/DetailsPage"
 function App() {
   return (
     <Router>
-      <div className="min-h-screen flex">
-        {/* Sidebar */}
+      <div className="h-screen flex">
+        {/* Sidebar (Fixed Height) */}
         <Sidebar />
 
-        {/* Main Content */}
-        <main className="flex-1 bg-gray-50">
+        {/* Main Content (Scrollable) */}
+        <main className="flex-1 bg-gray-50 flex flex-col h-screen overflow-hidden">
           <header className="h-16 border-b border-gray-200 flex items-center justify-between px-6">
             <div className="relative w-64">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -39,7 +39,8 @@ function App() {
             </div>
           </header>
 
-          <div className="p-6">
+          {/* Scrollable Content */}
+          <div className="flex-1 overflow-y-auto p-6">
             <Routes>
               <Route path="/" element={<FullICRPage />} />
               <Route path="/full-icr" element={<FullICRPage />} />
@@ -50,8 +51,9 @@ function App() {
         </main>
       </div>
     </Router>
-  )
+  );
 }
+
 
 export default App
 
