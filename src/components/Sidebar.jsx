@@ -34,6 +34,10 @@ const Sidebar = () => {
         <div className="px-4 mb-2">
           <h3 className="text-xs uppercase text-gray-600 font-semibold px-3 mb-2">Members</h3>
           <div className="space-y-1">
+            <Link to="/" className="flex items-center space-x-3 px-4 py-3 rounded-lg bg-white shadow-sm hover:bg-indigo-100 hover:text-indigo-700 transition duration-200">
+              <Users className="h-5 w-5 text-indigo-600" />
+              <span className="font-medium">Dashboard</span>
+            </Link>
             <Link to="/full-icr" className="flex items-center space-x-3 px-4 py-3 rounded-lg bg-white shadow-sm hover:bg-indigo-100 hover:text-indigo-700 transition duration-200">
               <UserCheck className="h-5 w-5 text-indigo-600" />
               <span className="font-medium">Full IRC Members</span>
