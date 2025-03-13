@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { Search, Globe, Grid, Bell } from "lucide-react"
 import Sidebar from "./components/Sidebar"
-import FullIRCPage from "./pages/fullIRCPage"
+import FullIRCPage from "./pages/FullIRCPage"
 import AssociateIRCPage from "./pages/AssociateIRCPage"
 import DetailsPage from "./pages/DetailsPage"
 import Dashboard from "./pages/Dashboard"
+
 
 function App() {
   return (
