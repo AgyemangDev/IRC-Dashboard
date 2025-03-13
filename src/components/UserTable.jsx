@@ -10,13 +10,7 @@ const IRCTable = ({ data, isLoading }) => {
   const displayedColumns =
     data.length > 0
       ? Object.keys(data[0])
-      : [
-          "Full Name",
-          "Acronym",
-          "Type",
-          "Email",
-          "Phone",
-        ];
+      : ["Full Name", "Acronym", "Type", "Email", "Phone"];
 
   const truncateText = (text, maxLength = 20) => {
     if (!text) return "-";
@@ -46,11 +40,11 @@ const IRCTable = ({ data, isLoading }) => {
         <thead>
           <tr className="bg-indigo-600 text-white text-xs uppercase tracking-wider">
             {displayedColumns.map((col, index) => (
-              <th key={index} className="py-3 px-4 text-left font-medium">
+              <th key={index} className="py-3 px-4 text-left font-semibold">
                 {col}
               </th>
             ))}
-            <th className="py-3 px-4 text-left font-medium">Actions</th>
+            <th className="py-3 px-4 text-left font-semibold">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -62,12 +56,12 @@ const IRCTable = ({ data, isLoading }) => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2, delay: rowIndex * 0.05 }}
-                className="border-b border-gray-200 hover:bg-indigo-100 transition group"
+                className="border-b border-gray-200 hover:bg-indigo-50 transition duration-300 group"
               >
                 {displayedColumns.map((col, colIndex) => (
                   <td key={colIndex} className="py-3 px-4 text-gray-700 relative">
                     <span className="block truncate group-hover:hidden">{truncateText(row[col])}</span>
-                    <span className="hidden group-hover:block absolute left-0 top-0 bg-white p-2 shadow-md rounded-md w-max text-black">
+                    <span className="hidden group-hover:flex absolute left-0 top-6 bg-white p-2 shadow-lg rounded-md w-max text-gray-900 border border-gray-300 z-10">
                       {row[col]}
                     </span>
                   </td>
@@ -75,7 +69,7 @@ const IRCTable = ({ data, isLoading }) => {
                 <td className="py-3 px-4">
                   <button
                     onClick={() => navigate("/details", { state: { rowData: row } })}
-                    className="p-2 rounded-lg bg-indigo-100 text-indigo-600 hover:bg-indigo-200 transition-colors"
+                    className="p-2 rounded-lg bg-indigo-100 text-indigo-600 hover:bg-indigo-200 transition duration-200"
                   >
                     <Eye className="h-5 w-5" />
                   </button>
