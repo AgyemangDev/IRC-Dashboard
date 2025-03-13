@@ -6,7 +6,7 @@ import { Plus } from "lucide-react"
 import Papa from "papaparse"
 import IRCTable from "../components/UserTable"
 
-const FullICRPage = () => {
+const FullIRCPage = () => {
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -59,7 +59,7 @@ const FullICRPage = () => {
       transition={{ duration: 0.5 }}
       className="bg-white rounded-lg shadow-sm p-6"
     >
-      <h1 className="text-2xl font-bold mb-6">Full ICR Members</h1>
+      <h1 className="text-2xl font-bold mb-6">Full IRC Members</h1>
 
       <div className="mt-6">
         <div className="flex justify-between items-center mb-4">
@@ -112,4 +112,4 @@ const FullICRPage = () => {
   )
 }
 
-export default FullICRPage
+export default FullIRCPage

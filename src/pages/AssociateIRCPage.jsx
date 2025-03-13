@@ -4,7 +4,7 @@ import { Plus } from 'lucide-react';
 import Papa from "papaparse";
 import IRCTable from "../components/UserTable";
 
-const AssociateICRPage = () => {
+const AssociateIRCPage = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -58,7 +58,7 @@ const AssociateICRPage = () => {
       transition={{ duration: 0.5 }}
       className="bg-white rounded-lg shadow-sm p-6"
     >
-      <h1 className="text-2xl font-bold mb-6">Associate ICR Members</h1>
+      <h1 className="text-2xl font-bold mb-6">Associate IRC Members</h1>
       
       <div className="mt-6">
         <div className="flex justify-between items-center mb-4">
@@ -110,4 +110,4 @@ const AssociateICRPage = () => {
   );
 };
 
-export default AssociateICRPage;
+export default AssociateIRCPage;

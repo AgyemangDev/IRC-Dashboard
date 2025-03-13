@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { Search, Globe, Grid, Bell } from "lucide-react"
 import Sidebar from "./components/Sidebar"
-import FullICRPage from "./pages/fullICRPage"
-import AssociateICRPage from "./pages/AssociateICRPage"
+import FullIRCPage from "./pages/fullIRCPage"
+import AssociateIRCPage from "./pages/AssociateIRCPage"
 import DetailsPage from "./pages/DetailsPage"
 import Dashboard from "./pages/Dashboard"
 
@@ -44,8 +44,8 @@ function App() {
           <div className="flex-1 overflow-y-auto p-6">
             <Routes>
               <Route path="/" element={<Dashboard />} />
-              <Route path="/full-icr" element={<FullICRPage />} />
-              <Route path="/associate-icr" element={<AssociateICRPage />} />
+              <Route path="/full-irc" element={<FullIRCPage />} />
+              <Route path="/associate-irc" element={<AssociateIRCPage />} />
               <Route path="/details" element={<DetailsPage />} />
             </Routes>
           </div>
