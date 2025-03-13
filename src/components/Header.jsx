@@ -1,5 +1,5 @@
 import { Edit, Trash2 } from "lucide-react";
-import BackButton from "./backButton";
+import BackButton from "./BackButton";
 
 const Header = ({ name, industry }) => {
   return (
