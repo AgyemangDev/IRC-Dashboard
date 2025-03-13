@@ -4,20 +4,22 @@ import { Users } from "lucide-react"
 // Custom tooltip for the pie chart
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
+    const dataItem = payload[0].payload; 
+
     return (
       <div className="bg-white p-3 border border-gray-200 shadow-md rounded-md">
-        <p className="font-medium text-gray-900">{`${payload[0].name}`}</p>
-        <p style={{ color: payload[0].color || payload[0].fill }}>{`Count: ${payload[0].value}`}</p>
-        <p style={{ color: payload[0].color || payload[0].fill }}>
-          {`Percentage: ${(payload[0].percent * 100).toFixed(0)}%`}
-        </p>
+        <p className="font-medium text-gray-900">{dataItem.name}</p>
+        <p style={{ color: dataItem.color }}>{`Count: ${dataItem.count}`}</p>
+        <p style={{ color: dataItem.color }}>{`Percentage: ${dataItem.value.toFixed(0)}%`}</p>
       </div>
-    )
+    );
   }
-  return null
-}
+  return null;
+};
 
 const MembershipPieChart = ({ data, isLoading, title = "Membership Categories" }) => {
+
+  console.log("Membership Data", data)
   if (!data || isLoading) {
     return (
       <div className="bg-white rounded-xl shadow-md border border-gray-100 p-4 md:p-6 h-64 flex items-center justify-center">

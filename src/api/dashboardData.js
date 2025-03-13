@@ -1,18 +1,7 @@
-// This is a sample API file that would fetch real data in a production environment
-// You can use this as a template for implementing actual API calls
 
 export const fetchDashboardData = async () => {
     try {
-      // In a real application, you would make API calls here
-      // const response = await fetch('/api/dashboard-stats');
-      // const data = await response.json();
-  
-      // For demonstration, we'll return mock data
       return {
-        membershipData: [
-          { name: "Full Members", value: 65, color: "#4f46e5" },
-          { name: "Associate Members", value: 35, color: "#818cf8" },
-        ],
         orgTypeData: [
           { name: "NGO", count: 42, color: "#4f46e5" },
           { name: "Government", count: 28, color: "#818cf8" },

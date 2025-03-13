@@ -12,7 +12,7 @@ const IRCTable = ({ data, isLoading }) => {
 
   // Get columns from data or use default columns
   const displayedColumns = ["Full Name of Legal Entity", "Acronym of Organisation", "Type of Organisation", "Date", "Telephone Number of Organisation"];
-  console.log(data)
+
   // Sort and filter data
   const processedData = useMemo(() => {
     let filteredData = [...data]

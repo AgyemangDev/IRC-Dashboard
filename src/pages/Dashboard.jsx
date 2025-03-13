@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Building, UserCheck, UserMinus, Globe } from "lucide-react"
+import { StatData } from "../api/StatsData"
 
 // Import chart components
 import MembershipPieChart from "../components/charts/membership-Pie-Chart"
@@ -12,20 +13,35 @@ import RegistrationTrendChart from "../components/charts/registration-trend-char
 import StatsSummaryCard from "../components/StatSummaryCard"
 import { fetchDashboardData } from "../api/dashboardData"
 
-
-
-
-
 const Dashboard = ({ initialData = null, fetchData = null }) => {
 
-  const summaryStats = [
-    { title: "Total Organizations", value: 145, icon: Building, change: "+12%", changeType: "positive" },
-    { title: "Active Members", value: 94, icon: UserCheck, change: "+8%", changeType: "positive" },
-    { title: "Pending Approvals", value: 17, icon: UserMinus, change: "-5%", changeType: "negative" },
-    { title: "Countries Represented", value: 12, icon: Globe, change: "+2", changeType: "positive" },
-  ]
+  const [summaryStats, setSummaryStats] = useState([])
   const [data, setData] = useState(initialData)
   const [isLoading, setIsLoading] = useState(!initialData)
+
+  useEffect(() => {
+    const fetchData = async () => {
+        const data = await StatData();
+        console.data
+        // Convert the object into an array of objects with necessary properties
+        const formattedData = [
+            { title: "Total Organizations", value: data.uniqueOrganizations, icon: "Building" },
+            { title: "Full IRC Accounts", value: data.fullCount, icon: "UserCheck" },
+            { title: "Associated IRC Accounts", value: data.associateCount, icon: "UserCheck" },
+            { title: "Countries Represented", value: data.uniqueCountries, icon: "Globe" },
+        ];
+        
+        setSummaryStats(formattedData);
+        setData(prevData => ({
+          ...prevData,
+          membershipData: data.membershipData,
+          orgTypeData: data.orgTypeData,
+      }));
+    };
+    fetchData();
+}, []);
+
+  
 
   useEffect(() => {
     if (initialData) {
@@ -34,7 +50,7 @@ const Dashboard = ({ initialData = null, fetchData = null }) => {
       return
     }
 
-    const loadData = async () => {
+    const StatData = async () => {
       setIsLoading(true)
       try {
         if (fetchData) {
@@ -51,8 +67,9 @@ const Dashboard = ({ initialData = null, fetchData = null }) => {
       }
     }
 
-    loadData()
+    StatData()
   }, [initialData, fetchData])
+
 
   if (isLoading) {
     return (
@@ -63,8 +80,8 @@ const Dashboard = ({ initialData = null, fetchData = null }) => {
     )
   }
 
-  const { membershipData, orgTypeData, monthlyData, locationData } = data
-
+  const {orgTypeData, monthlyData, locationData } = data
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white p-4 md:p-6">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="max-w-7xl mx-auto">
@@ -88,15 +105,11 @@ const Dashboard = ({ initialData = null, fetchData = null }) => {
         ? UserMinus
         : Globe
     }
-    change={stat.change}
-    changeType={stat.changeType}
   />
 ))}
-
         </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <MembershipPieChart data={membershipData} title="Membership Categories" />
+        <MembershipPieChart data={data.membershipData} title="Membership Categories" />
           <OrganizationTypeChart data={orgTypeData} title="Organization Types" />
           <LocationMap data={locationData} title="Organizations by Location" />
           <RegistrationTrendChart data={monthlyData} title="Monthly Registration Trend" />

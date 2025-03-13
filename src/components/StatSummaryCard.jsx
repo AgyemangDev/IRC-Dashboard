@@ -1,4 +1,3 @@
-import { ArrowUpRight } from "lucide-react"
 
 const StatsSummaryCard = ({ title, value, icon: Icon, change, changeType }) => {
   return (
@@ -11,12 +10,6 @@ const StatsSummaryCard = ({ title, value, icon: Icon, change, changeType }) => {
         <div className="p-2 bg-indigo-100 rounded-lg">
           <Icon className="h-5 w-5 text-indigo-600" />
         </div>
-      </div>
-      <div
-        className={`flex items-center mt-3 text-sm ${changeType === "positive" ? "text-green-600" : "text-red-600"}`}
-      >
-        <ArrowUpRight className={`h-4 w-4 mr-1 ${changeType === "negative" ? "rotate-180" : ""}`} />
-        <span>{change} from last month</span>
       </div>
     </div>
   )
