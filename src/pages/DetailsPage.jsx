@@ -34,7 +34,6 @@ const DetailsPage = () => {
   const location = useLocation();
   const { rowData } = location.state || {}; 
 
-  console.log(rowData)
 
   if (!rowData) return <NoData />;
 

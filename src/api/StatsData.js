@@ -1,5 +1,6 @@
 import Papa from 'papaparse';
 
+
 const fetchCSV = async (filePath) => {
     const response = await fetch(filePath);
     const csvText = await response.text();
@@ -10,6 +11,69 @@ const fetchCSV = async (filePath) => {
             complete: (results) => resolve(results.data),
         });
     });
+};
+
+// Country code mapping
+const countryCodeMap = {
+    "Germany": "DE",
+    "Finland": "FI",
+    "Benin": "BJ",
+    "France": "FR",
+    "Belgium": "BE",
+    "Côte d'Ivoire": "CI",
+    "Ghana": "GH",
+    "Uganda": "UG",
+    "Rwanda": "RW",
+    "Netherlands": "NL",
+    "Burkina Faso": "BF",
+    "Ethiopia": "ET",
+    "Portugal": "PT",
+    "Nigeria": "NG",
+    "Zimbabwe": "ZW",
+    "Tanzania, the United Republic of": "TZ",
+    // Additional common country codes
+    "United States": "US",
+    "United Kingdom": "GB",
+    "Canada": "CA",
+    "Australia": "AU",
+    "Kenya": "KE",
+    "South Africa": "ZA",
+    "Switzerland": "CH",
+    "Sweden": "SE",
+    "Norway": "NO",
+    "Denmark": "DK",
+    "Spain": "ES",
+    "Italy": "IT",
+    "India": "IN",
+    "China": "CN",
+    "Japan": "JP",
+    "Brazil": "BR",
+    "Argentina": "AR",
+    "Mexico": "MX",
+    "Senegal": "SN",
+    "Mali": "ML",
+    "Niger": "NE",
+    "Cameroon": "CM",
+    "Malawi": "MW",
+    "Zambia": "ZM",
+    "Egypt": "EG",
+    "Morocco": "MA",
+    "Algeria": "DZ",
+    "Tunisia": "TN",
+    "Sudan": "SD",
+    "South Sudan": "SS",
+    "Somalia": "SO",
+    "Djibouti": "DJ",
+    "Eritrea": "ER",
+    "Democratic Republic of the Congo": "CD",
+    "Republic of the Congo": "CG",
+    "Central African Republic": "CF",
+    "Chad": "TD",
+    "Gabon": "GA",
+    "Equatorial Guinea": "GQ",
+    "Madagascar": "MG",
+    "Mozambique": "MZ",
+    "Tanzania": "TZ"
 };
 
 export const StatData = async () => {
@@ -48,9 +112,28 @@ export const StatData = async () => {
             .map(row => parseInt(row["Males"] || "0", 10))
             .reduce((sum, num) => sum + num, 0);
 
+        // Extract countries and count occurrences
+        const countryOccurrences = {};
+        allData.forEach(row => {
+            const country = row["Address (Country)"];
+            if (country) {
+                countryOccurrences[country] = (countryOccurrences[country] || 0) + 1;
+            }
+        });
+
+        // Create country data for mapping with React Simple Maps
+        const countryData = Object.entries(countryOccurrences).map(([country, count]) => {
+            const code = countryCodeMap[country] || null;
+            return {
+                country,
+                countryCode: code,
+                count,
+                color: getColorByCount(count)
+            };
+        });
+
         // Extract unique countries
-        const allCountries = allData.map(row => row["Address (Country)"]).filter(Boolean);
-        const uniqueCountries = [...new Set(allCountries)];
+        const uniqueCountries = Object.keys(countryOccurrences);
 
         // Extract and categorize organization types
         const organizationCategories = {
@@ -96,6 +179,7 @@ export const StatData = async () => {
             totalFemales,
             totalMales,
             uniqueCountries: uniqueCountries.length,
+            countryData,
             membershipData: [
                 { name: "Full Members", value: fullPercentage, count: fullCount, color: "#4f46e5" },
                 { name: "Associate Members", value: associatePercentage, count: associateCount, color: "#818cf8" },
@@ -107,3 +191,11 @@ export const StatData = async () => {
         return null;
     }
 };
+
+// Helper function to get color based on count (for choropleth mapping)
+function getColorByCount(count) {
+    if (count >= 10) return "#4f46e5"; // Dark blue for highest counts
+    if (count >= 5) return "#818cf8";  // Medium blue
+    if (count >= 3) return "#a5b4fc";  // Light blue
+    return "#c7d2fe";                  // Very light blue for lowest counts
+}

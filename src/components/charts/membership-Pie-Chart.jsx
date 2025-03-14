@@ -19,7 +19,6 @@ const CustomTooltip = ({ active, payload }) => {
 
 const MembershipPieChart = ({ data, isLoading, title = "Membership Categories" }) => {
 
-  console.log("Membership Data", data)
   if (!data || isLoading) {
     return (
       <div className="bg-white rounded-xl shadow-md border border-gray-100 p-4 md:p-6 h-64 flex items-center justify-center">

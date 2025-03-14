@@ -8,7 +8,7 @@ import { StatData } from "../api/StatsData"
 // Import chart components
 import MembershipPieChart from "../components/charts/membership-Pie-Chart"
 import OrganizationTypeChart from "../components/charts/organization-type-chart"
-import LocationMap from "../components/charts/location-map"
+import WorldMapComponent from "../components/charts/WorldMapComponent"
 import RegistrationTrendChart from "../components/charts/registration-trend-chart"
 import StatsSummaryCard from "../components/StatSummaryCard"
 import { fetchDashboardData } from "../api/dashboardData"
@@ -109,11 +109,14 @@ const Dashboard = ({ initialData = null, fetchData = null }) => {
 ))}
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <MembershipPieChart data={data.membershipData} title="Membership Categories" />
-          <OrganizationTypeChart data={orgTypeData} title="Organization Types" />
-          <LocationMap data={locationData} title="Organizations by Location" />
-          <RegistrationTrendChart data={monthlyData} title="Monthly Registration Trend" />
-        </div>
+  <MembershipPieChart data={data.membershipData} title="Membership Categories" />
+  <OrganizationTypeChart data={orgTypeData} title="Organization Types" />
+  
+  {/* Ensure the last one takes full width when there are three items */}
+  <WorldMapComponent title="Organizations by Location" className="lg:col-span-2" />
+            {/* <RegistrationTrendChart data={monthlyData} title="Monthly Registration Trend" /> */}
+</div>
+
       </motion.div>
     </div>
   )
