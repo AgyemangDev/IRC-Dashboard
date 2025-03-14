@@ -14,6 +14,7 @@ const MapLegend = () => (
 
 const LegendItem = ({ color, label }) => (
   <div className="flex items-center">
+    
     {color.startsWith("#") ? (
       <div className="w-4 h-4 mr-2 border border-gray-300" style={{ backgroundColor: color }}></div>
     ) : (
